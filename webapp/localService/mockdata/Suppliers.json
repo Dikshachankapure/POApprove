@@ -1,0 +1,12 @@
+[
+  {
+    "VendorID": 1,
+    "VendorName": "ABC",
+    "Material": "Material100"
+  },
+  {
+    "VendorID": 2,
+    "VendorName": "DEF",
+    "Material": "Material101"
+  }
+]

@@ -1,0 +1,157 @@
+<mvc:View
+	controllerName="myCompany.myApp.controller.Object"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:semantic="sap.m.semantic"
+	xmlns:form="sap.ui.layout.form"
+	xmlns="sap.m">
+	<semantic:FullscreenPage
+		id="page"
+		busy="{objectView>/busy}"
+		busyIndicatorDelay="{objectView>/delay}"
+		navButtonPress="onNavBack"
+		showNavButton="true"
+		title="{i18n>objectTitle}">
+		<semantic:content>
+			<ObjectHeader
+				id="objectHeader"
+				responsive="true"
+				title="{PONumber}"
+				numberUnit="PC"
+				numberState="Success">
+				<!--<attributes>
+					<ObjectAttribute
+						title="{i18n>ObjectVendorTitle}"
+						text="{
+							path: 'Supplier/VendorName',
+							formatter: '.formatter.strvalue'
+						}"/>
+				</attributes>-->
+				<!--<statuses>
+					<ObjectStatus
+						text="{i18n>ObjectDiscontinuedStatusText}"
+						state="Error"
+						visible="{path:'VendorName'}"/>
+				</statuses>-->
+			</ObjectHeader>
+			<Panel
+				class="sapUiContentPadding"
+				headerText="{i18n>ObjectItemDetailTitle}">
+    			<content>
+    				<!--<form:SimpleForm
+						minWidth="1024"
+						maxContainerCols="2"
+						editable="false"
+						layout="ResponsiveGridLayout"
+						labelSpanL="3"
+						labelSpanM="3"
+						emptySpanL="4"
+						emptySpanM="4"
+						columnsL="1"
+						columnsM="1">
+						<form:content>
+							<Label text="{i18n>ObjectMaterial}"/>
+							<Text text="{Supplier/Material}"/>
+							<Label text="{i18n>ObjectCurrQty}"/>
+							<Text text="{Qty1}"/>
+							<Label text="{i18n>ObjectPrevQty}"/>
+							<Text text="{Qty2}"/>
+							<Label text="{i18n>ObjectCurrAmount}"/>
+							<Text text="{Amount1}"/>
+							<Label text="{i18n>ObjectPrevAmount}"/>
+							<Text text="{Amount2}"/>
+						</form:content>
+					</form:SimpleForm>-->
+					<Table id="table1" 
+								busyIndicatorDelay="{worklistView>/tableBusyDelay}"
+								class="sapUiResponsiveMargin sapUiNoMarginTop"
+								growing="true"
+								growingScrollToLoad="true"
+								noDataText="{worklistView>/tableNoDataText}"
+								updateFinished="onUpdateFinished"
+								width="auto"
+								mode="None"
+								
+								items="{
+									path: '/Products',
+									sorter: {
+										path: 'Supplier/VendorName',
+										descending: false
+									},
+									parameters: {
+										'expand': 'Supplier'
+									}
+								}">
+						<columns>
+					
+					<Column 
+						id="MaterialColumn"																																																																																																																																																																																										
+						demandPopin="true"
+						width="1rem">
+        				<Text text="{i18n>TableMaterial}"/>
+    				</Column>
+    				<Column 
+						id="PlantColumn"																																																																																																																																																																																										
+						demandPopin="true"
+						width="1rem">
+        				<Text text="{i18n>TablePlant}"/>
+    				</Column>
+    				<Column id="CurrQtyColumn"
+            			demandPopin="true"
+            			
+            			hAlign="Left" width="1rem">
+        				<Text text="{i18n>TableCurrentQty}"/>
+					</Column>
+					<Column id="PrevQtyColumn"
+            			hAlign="Left" minScreenWidth="Tablet" width="1rem">
+        				<Text text="{i18n>TablePreviousQty}"/>
+    				</Column>
+    				<Column id="CurrPriceColumn"
+            			hAlign="Left" minScreenWidth="Tablet" width="1rem">
+        				<Text text="{i18n>TableCurrentPrice}" />
+    				</Column>
+    				<Column id="PrevPriceColumn"
+            			hAlign="Left" minScreenWidth="Tablet" width="1rem">
+        				<Text text="{i18n>TablePreviousPrice}"/>
+    				</Column>
+    				
+				</columns>
+						<items>
+							<ColumnListItem
+							type="Inactive">
+									<cells>
+									<Text text = "{Supplier/Material}"/>
+									<Text text = "{Plant}"/>
+									<ObjectNumber
+										number="{Qty1}"
+										unit="PC"/>
+									<ObjectNumber
+										number="{Qty2}"
+										unit="PC"/>
+									<ObjectNumber
+									unit="EUR"
+									number="{
+										path: 'Amount1',
+										formatter: '.formatter.numberUnit'
+									}"/>
+									<ObjectNumber
+									unit="EUR"
+									number="{
+										path: 'Amount2',
+										formatter: '.formatter.numberUnit'
+									}"/>
+								
+									</cells>
+							</ColumnListItem>
+						</items>
+					</Table>
+    			</content>
+			</Panel>
+		</semantic:content>
+		<semantic:positiveAction>
+			<semantic:PositiveAction text="{i18n>buttonApproveAll}" icon="sap-icon://accept" press="onUpdateStockObjects"/>
+		</semantic:positiveAction>
+		<semantic:negativeAction>
+			<semantic:NegativeAction text="{i18n>buttonRejectAll}" icon="sap-icon://reject" press="onUnlistObjects"/>
+		</semantic:negativeAction>
+	</semantic:FullscreenPage>
+</mvc:View>

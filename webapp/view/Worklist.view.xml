@@ -1,0 +1,182 @@
+<mvc:View
+	controllerName="myCompany.myApp.controller.Worklist"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:semantic="sap.m.semantic"
+	xmlns="sap.m">
+	<semantic:FullscreenPage
+		id="page"
+		navButtonPress="onNavBack"
+		showNavButton="true"
+		title="{i18n>worklistViewTitle}">
+		<semantic:content>
+			<!--<IconTabBar
+				id="iconTabBar"
+				select="onQuickFilter"
+				expandable="false"
+				applyContentPadding="false">
+				<items>
+					<IconTabFilter
+						key="all"
+						showAll="true"
+						count="{worklistView>/countAll}"
+						text="{i18n>WorklistFilterProductsAll}"/>
+					<IconTabSeparator/>
+					<IconTabFilter
+						key="inStock"
+						icon="sap-icon://message-success"
+						iconColor="Positive"
+						count="{worklistView>/inStock}"
+						text="{i18n>WorklistFilterInStock}" />
+					<IconTabFilter
+						key="shortage"
+						icon="sap-icon://message-warning"
+						iconColor="Critical"
+						count="{worklistView>/shortage}"
+						text="{i18n>WorklistFilterShortage}"/>
+					
+				</items>
+			</IconTabBar>-->
+			<Table
+				id="table"
+				busyIndicatorDelay="{worklistView>/tableBusyDelay}"
+				class="sapUiResponsiveMargin sapUiNoMarginTop"
+				growing="true"
+				growingScrollToLoad="true"
+				noDataText="{worklistView>/tableNoDataText}"
+				updateFinished="onUpdateFinished"
+				width="auto"
+				mode="MultiSelect"
+				items="{
+					path: '/Products',
+					sorter: {
+						path: 'PONumber',
+						descending: false,
+						group: true
+					},
+					parameters: {
+						'expand': 'Supplier'
+					}
+				}">
+				<headerToolbar>
+					<Toolbar>
+						<Title
+							id="tableHeader"
+							text="{worklistView>/worklistTableTitle}"/>
+						<ToolbarSpacer/>
+						<SearchField
+							id="searchField"
+							search="onSearch"
+							tooltip="{i18n>worklistSearchTooltip}"
+							width="auto"/>
+					</Toolbar>
+				</headerToolbar>
+				<columns>
+					<Column id="ponoColumn" mergeDuplicates="true">
+						<Text
+							id="colPonumber"
+							text="{i18n>TablePONumber}"/>
+					</Column>
+				</columns>
+				<items>
+					<ColumnListItem
+						press="onPress"
+						type="Navigation">
+						<cells>
+							<Table id="table1" 
+								busyIndicatorDelay="{worklistView>/tableBusyDelay}"
+								class="sapUiResponsiveMargin sapUiNoMarginTop"
+								growing="true"
+								growingScrollToLoad="true"
+								noDataText="{worklistView>/tableNoDataText}"
+								updateFinished="onUpdateFinished"
+								width="auto"
+								mode="None"
+								
+								items="{
+									path: '/Products',
+									sorter: {
+										path: 'Supplier/VendorName',
+										descending: false
+									},
+									parameters: {
+										'expand': 'Supplier'
+									}
+								}">
+						<columns>
+					
+					<Column 
+						id="MaterialColumn"																																																																																																																																																																																										
+						demandPopin="true"
+						width="1rem">
+        				<Text text="{i18n>TableMaterial}"/>
+    				</Column>
+    				<Column 
+						id="PlantColumn"																																																																																																																																																																																										
+						demandPopin="true"
+						width="1rem">
+        				<Text text="{i18n>TablePlant}"/>
+    				</Column>
+    				<Column id="CurrQtyColumn"
+            			demandPopin="true"
+            			
+            			hAlign="Left" width="1rem">
+        				<Text text="{i18n>TableCurrentQty}"/>
+					</Column>
+					<Column id="PrevQtyColumn"
+            			hAlign="Left" minScreenWidth="Tablet" width="1rem">
+        				<Text text="{i18n>TablePreviousQty}"/>
+    				</Column>
+    				<Column id="CurrPriceColumn"
+            			hAlign="Left" minScreenWidth="Tablet" width="1rem">
+        				<Text text="{i18n>TableCurrentPrice}" />
+    				</Column>
+    				<Column id="PrevPriceColumn"
+            			hAlign="Left" minScreenWidth="Tablet" width="1rem">
+        				<Text text="{i18n>TablePreviousPrice}"/>
+    				</Column>
+    				
+				</columns>
+						<items>
+							<ColumnListItem
+							type="Inactive">
+									<cells>
+									<Text text = "{Supplier/Material}"/>
+									<Text text = "{Plant}"/>
+									<ObjectNumber
+										number="{Qty1}"
+										unit="PC"/>
+									<ObjectNumber
+										number="{Qty2}"
+										unit="PC"/>
+									<ObjectNumber
+									unit="EUR"
+									number="{
+										path: 'Amount1',
+										formatter: '.formatter.numberUnit'
+									}"/>
+									<ObjectNumber
+									unit="EUR"
+									number="{
+										path: 'Amount2',
+										formatter: '.formatter.numberUnit'
+									}"/>
+								
+									</cells>
+							</ColumnListItem>
+						</items>
+					</Table>
+				</cells>
+							
+					</ColumnListItem>
+				</items>
+			</Table>
+		</semantic:content>
+	
+		<semantic:positiveAction>
+			<semantic:PositiveAction text="{i18n>buttonApproveAll}" icon="sap-icon://accept" press="onUpdateStockObjects"/>
+		</semantic:positiveAction>
+		<semantic:negativeAction>
+			<semantic:NegativeAction text="{i18n>buttonRejectAll}" icon="sap-icon://reject" press="onUnlistObjects"/>
+		</semantic:negativeAction>
+	</semantic:FullscreenPage>
+</mvc:View>
